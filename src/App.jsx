@@ -1,14 +1,67 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
+import Sidebar from "./components/Sidebar";
+import Main from "./components/Main";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [empleados, setEmpleados] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/empleados")
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setEmpleados(data);
+      });
+
+    return () => {};
+  }, []);
+
+  const handleCrearEmpleado = (user_id,nombre,apellido,cargo,salario) => {
+    const payload = {
+      user_id,
+      nombre,
+      apellido,
+      cargo,
+      salario
+    }
+
+    const configs = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    };
+
+    const url = `http://localhost:5000/empleados`;
+    fetch(url, configs)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+  };
+
+  const handleBuscarEmpleado = (id) => {
+    const configs = {
+      method: "GET",
+    };
+
+    const url = `http://localhost:5000/empleados/${encodeURIComponent(id)}`;
+    fetch(url, configs)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+  };
 
   return (
-    <>
-      <h1 class="text-3xl font-bold underline">Hello world!</h1>
-    </>
+    <div className="min-h-screen flex">
+      <Sidebar />
+      <Main empleados={empleados} handleBuscarEmpleado={handleBuscarEmpleado} handleCrearEmpleado={handleCrearEmpleado} />
+    </div>
   );
 }
 
