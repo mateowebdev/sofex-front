@@ -2,13 +2,13 @@ import { useState } from "react";
 import { FaMagic } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
 
-export default function Form({ close }) {
+export default function FormEdit({ empleado, close }) {
   const [user, setUser] = useState({
-    user_id: "",
-    nombre: "",
-    apellido: "",
-    cargo: "",
-    salario: 0,
+    user_id: empleado.user_id,
+    nombre: empleado.nombre,
+    apellido: empleado.apellido,
+    cargo: empleado.cargo,
+    salario: empleado.salario,
   });
 
   const { user_id, nombre, apellido, cargo, salario } = user;
@@ -35,7 +35,7 @@ export default function Form({ close }) {
           <AiOutlineClose />
         </button>
       </div>
-      <h3 className="font-bold text-lg text-center">Crear usuario</h3>
+      <h3 className="font-bold text-lg text-center">Editar usuario</h3>
       <div className="w-full">
         <label>User id:</label>
         <div className="flex gap-2">
@@ -44,15 +44,10 @@ export default function Form({ close }) {
             type="text"
             name="user_id"
             value={user_id}
-            className="w-full outline-none p-2 rounded-md"
+            className="w-full outline-none p-2 rounded-md cursor-not-allowed"
+            disabled={true}
           />
-          <button
-            type="button"
-            className="p-2 bg-amber-300 rounded-md"
-            title="Generar automáticamente"
-          >
-            <FaMagic />
-          </button>
+          
         </div>
       </div>
       <div className="w-full">
@@ -100,7 +95,7 @@ export default function Form({ close }) {
         onClick={(e) => handleSubmit(e)}
         className="bg-green-600 text-white p-3 rounded-md mt-3"
       >
-        Cargar nuevo
+        Guardar cambios
       </button>
     </form>
   );

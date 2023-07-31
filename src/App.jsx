@@ -19,14 +19,14 @@ function App() {
     return () => {};
   }, []);
 
-  const handleCrearEmpleado = (user_id,nombre,apellido,cargo,salario) => {
+  const handleCrearEmpleado = (user_id, nombre, apellido, cargo, salario) => {
     const payload = {
       user_id,
       nombre,
       apellido,
       cargo,
-      salario
-    }
+      salario,
+    };
 
     const configs = {
       method: "POST",
@@ -45,22 +45,33 @@ function App() {
   };
 
   const handleBuscarEmpleado = (id) => {
+    let result;
+
     const configs = {
       method: "GET",
     };
+
+    id = id.trim();
 
     const url = `http://localhost:5000/empleados/${encodeURIComponent(id)}`;
     fetch(url, configs)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        result = data;
       });
+
+    return result;
   };
 
   return (
     <div className="min-h-screen flex">
       <Sidebar />
-      <Main empleados={empleados} handleBuscarEmpleado={handleBuscarEmpleado} handleCrearEmpleado={handleCrearEmpleado} />
+      <Main
+        empleados={empleados}
+        handleBuscarEmpleado={handleBuscarEmpleado}
+        handleCrearEmpleado={handleCrearEmpleado}
+      />
     </div>
   );
 }

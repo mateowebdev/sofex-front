@@ -1,4 +1,4 @@
-export default function EmpleadosTable({ empleados }) {
+export default function EmpleadosTable({ empleados, handleEditUser }) {
   return (
     <div className="">
       <table className="bg-white min-w-full text-left text-sm font-regular rounded-md overflow-hidden">
@@ -21,7 +21,7 @@ export default function EmpleadosTable({ empleados }) {
         </thead>
         <tbody>
           {empleados.map((empleado) => (
-            <Fila key={empleado.id} empleado={empleado} />
+            <Fila key={empleado.id} empleado={empleado} handleEditUser={handleEditUser} />
           ))}
         </tbody>
       </table>
@@ -32,7 +32,7 @@ export default function EmpleadosTable({ empleados }) {
 import { useState } from "react";
 import { GrEdit, GrTrash } from "react-icons/gr";
 
-function Fila({ empleado }) {
+function Fila({ empleado, handleEditUser }) {
   const [eliminado, setEliminado] = useState(false);
 
   const { user_id, nombre, apellido, cargo } = empleado;
@@ -74,7 +74,7 @@ function Fila({ empleado }) {
           <td className="whitespace-nowrap pl-2 py-2">{cargo}</td>
           <td className="whitespace-nowrap pl-2 py-2 flex gap-3">
             <button className="bg-slate-200 p-2 rounded-md" title="Editar">
-              <GrEdit />
+              <GrEdit onClick={()=>{handleEditUser(empleado)}}/>
             </button>
             <button className="bg-red-200 p-2 rounded-md" title="Borrar">
               <GrTrash onClick={() => handleDelete(user_id)} />
