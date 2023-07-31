@@ -25,7 +25,14 @@ export default function Form({ close }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    Swal.fire("Any fool can use a computer");
+  };
+
+  const handleAleatorio = () => {
+    const aleatorio = generarStringAleatorio();
+    setUser({
+      ...user,
+      user_id: aleatorio,
+    });
   };
 
   return (
@@ -50,6 +57,7 @@ export default function Form({ close }) {
             type="button"
             className="p-2 bg-amber-300 rounded-md"
             title="Generar automáticamente"
+            onClick={handleAleatorio}
           >
             <FaMagic />
           </button>
@@ -104,4 +112,38 @@ export default function Form({ close }) {
       </button>
     </form>
   );
+}
+
+function generarStringAleatorio() {
+  const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  const numeros = "0123456789";
+  const simbolos = "!@#$%^&*()-_=+[]{}|;:,.<>?";
+
+  const getRandomItem = (array) =>
+    array[Math.floor(Math.random() * array.length)];
+
+  let resultado = "";
+
+  // Generar 4 letras aleatorias
+  for (let i = 0; i < 4; i++) {
+    resultado += getRandomItem(letras);
+  }
+
+  // Generar 4 números aleatorios
+  for (let i = 0; i < 4; i++) {
+    resultado += getRandomItem(numeros);
+  }
+
+  // Generar 4 símbolos aleatorios
+  for (let i = 0; i < 4; i++) {
+    resultado += getRandomItem(simbolos);
+  }
+
+  // Mezclar el string aleatorio para que no esté en un orden predecible
+  resultado = resultado
+    .split("")
+    .sort(() => Math.random() - 0.5)
+    .join("");
+
+  return resultado;
 }

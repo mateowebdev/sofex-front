@@ -25,7 +25,6 @@ export default function FormEdit({ empleado, close }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    Swal.fire("Any fool can use a computer");
   };
 
   return (
